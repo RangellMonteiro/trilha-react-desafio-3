@@ -29,8 +29,23 @@ const Login = () => {
             }
 
             alert('Usuário ou senha inválido')
-        }catch(e){
+        }catch(error){
             //TODO: HOUVE UM ERRO
+            // Logar o erro para depuração
+            console.error('Erro ao realizar login:', error);
+
+            // Mensagem amigável para o usuário
+            if (error.response) {
+            // Erro retornado pelo servidor
+                alert(`Erro do servidor: ${error.response.data?.message || 'Tente novamente mais tarde'}`);
+        }   else if (error.request) {
+            // Falha na comunicação com o servidor
+                alert('Erro de conexão. Verifique sua internet ou tente novamente mais tarde.');
+        }   else {
+            // Erro inesperado
+            alert('Ocorreu um erro inesperado. Tente novamente mais tarde.');
+            }
+
         }
     };
 
@@ -56,7 +71,8 @@ const Login = () => {
                 </form>
                 <Row>
                     <EsqueciText>Esqueci minha senha</EsqueciText>
-                    <CriarText>Criar Conta</CriarText>
+                    <CriarText onClick={() => navigate('/cadastro')}>Criar Conta</CriarText>
+
                 </Row>
                 </Wrapper>
             </Column>
